@@ -1,0 +1,50 @@
+CREATE TABLE Usuario (
+  id INT PRIMARY KEY,
+  nombre VARCHAR(50) NOT NULL,
+  email VARCHAR(50) UNIQUE NOT NULL,
+  contrasena VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Partida (
+  id INT PRIMARY KEY,
+  usuario_id INT NOT NULL,
+  puntaje INT NOT NULL,
+  fecha DATETIME NOT NULL,
+  FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
+);
+
+DML: 
+
+INSERT INTO Usuario (id, nombre, email, contrasena)
+VALUES
+  (1, 'Juan Pérez', 'juan@example.com', 'password123'),
+  (2, 'María González', 'maria@example.com', 'abc456'),
+  (3, 'Pedro Ramírez', 'pedro@example.com', 'xyz789');
+
+INSERT INTO Partida (id, usuario_id, puntaje, fecha)
+VALUES
+  (1, 1, 500, '2023-05-01 10:30:00'),
+  (2, 1, 300, '2023-05-02 15:45:00'),
+  (3, 2, 400, '2023-05-03 09:20:00'),
+  (4, 2, 600, '2023-05-04 14:10:00'),
+  (5, 3, 250, '2023-05-05 11:40:00'),
+  (6, 3, 450, '2023-05-06 16:55:00');
+
+-Obtener todos los usuarios
+SELECT * FROM Usuario;
+
+-Obtener todas las partidas
+SELECT * FROM Partida;
+
+-Obtener las partidas de un usuario específico
+SELECT * FROM Partida WHERE usuario_id = 1;
+
+-Obtener el puntaje promedio de todas las partidas
+SELECT AVG(puntaje) AS puntaje_promedio FROM Partida;
+
+-Obtener el usuario con el puntaje más alto
+SELECT u.nombre, p.puntaje
+FROM Usuario u
+JOIN Partida p ON u.id = p.usuario_id
+ORDER BY p.puntaje DESC
+LIMIT 1;
