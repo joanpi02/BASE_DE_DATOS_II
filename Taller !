@@ -1,0 +1,37 @@
+CREATE TABLE Order (
+  id INT PRIMARY KEY
+);
+
+CREATE TABLE order_line (
+  id INT PRIMARY KEY,
+  order_id INT,
+  product_id INT,
+  quantity INT,
+  FOREIGN KEY (order_id) REFERENCES Order(id),
+  FOREIGN KEY (product_id) REFERENCES Product(id)
+);
+
+CREATE TABLE Product (
+  id INT PRIMARY KEY,
+  name VARCHAR(50),
+  price DECIMAL(10, 2),
+  category_name VARCHAR(50),
+  FOREIGN KEY (category_name) REFERENCES Category(name)
+);
+
+CREATE TABLE Category (
+  name VARCHAR(50) PRIMARY KEY
+);
+
+CREATE TABLE Food (
+  product_id INT PRIMARY KEY,
+  expiration_date DATE,
+  calories INT,
+  FOREIGN KEY (product_id) REFERENCES Product(id)
+);
+
+CREATE TABLE Furniture (
+  product_id INT PRIMARY KEY,
+  manufacture_date DATE,
+  FOREIGN KEY (product_id) REFERENCES Product(id)
+);
