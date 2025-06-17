@@ -1,0 +1,272 @@
+CREATE DATABASE fidelizacion;
+USE fidelizacion;
+
+-- Creamos las tablas 
+CREATE TABLE Perfil (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre_perfil VARCHAR(50),
+    Fecha_vigencia DATE,
+    Descripcion TEXT,
+    Encargado_id INT DEFAULT NULL
+);
+
+CREATE TABLE Usuario (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(50),
+    Apellido VARCHAR(50),
+    Estado ENUM('activo','inactivo'),
+    Contrasena VARCHAR(100),
+    Cargo VARCHAR(50),
+    Salario DECIMAL(10,2),
+    Fecha_ingreso DATE,
+    Perfil_id INT,
+    FOREIGN KEY (Perfil_id) REFERENCES Perfil(id)
+);
+
+
+CREATE TABLE Login (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Usuario_id INT,
+    Fecha_hora_login DATETIME,
+    Estado_login ENUM('exitoso','fallido'),
+    FOREIGN KEY (Usuario_id) REFERENCES Usuario(id)
+);
+
+CREATE TABLE ActividadFidelizacion (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Usuario_id INT,
+    Fecha_actividad DATE,
+    Tipo_actividad VARCHAR(50),
+    Descripcion TEXT,
+    Puntos INT,
+    FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
+);
+
+-- Inicio de Ingreso de datos
+-- Ingreso de los 10 Perfiles diferentes
+INSERT INTO Perfil (Id, Nombre_perfil, Fecha_vigencia, Descripcion, Encargado_id) 
+	VALUES (1, 'Perfil 1', '2023-10-08', 'Tenía sentido y valor propio.', 12);
+INSERT INTO Perfil (Id, Nombre_perfil, Fecha_vigencia, Descripcion, Encargado_id) 
+	VALUES (2, 'Perfil 2', '2023-10-01', 'La música ayuda a mantener la moral.', 6);
+INSERT INTO Perfil (Id, Nombre_perfil, Fecha_vigencia, Descripcion, Encargado_id) 
+	VALUES (3, 'Perfil 3', '2022-11-06', 'Fácil de entender para el público.', 13);
+INSERT INTO Perfil (Id, Nombre_perfil, Fecha_vigencia, Descripcion, Encargado_id) 
+	VALUES (4, 'Perfil 4', '2022-06-18', 'Fomentan la inclusión laboral.', 8);
+INSERT INTO Perfil (Id, Nombre_perfil, Fecha_vigencia, Descripcion, Encargado_id) 
+	VALUES (5, 'Perfil 5', '2024-02-27', 'Se comunicaban con claridad.', 10);
+INSERT INTO Perfil (Id, Nombre_perfil, Fecha_vigencia, Descripcion, Encargado_id) 
+	VALUES (6, 'Perfil 6', '2022-08-22', 'Inspiraban confianza.', 20);
+INSERT INTO Perfil (Id, Nombre_perfil, Fecha_vigencia, Descripcion, Encargado_id) 
+	VALUES (7, 'Perfil 7', '2024-01-28', 'Trabajaban en equipo.', 7);
+INSERT INTO Perfil (Id, Nombre_perfil, Fecha_vigencia, Descripcion, Encargado_id) 
+	VALUES (8, 'Perfil 8', '2022-08-18', 'Aplicaban buenas prácticas.', 4);
+INSERT INTO Perfil (Id, Nombre_perfil, Fecha_vigencia, Descripcion, Encargado_id) 
+	VALUES (9, 'Perfil 9', '2023-08-11', 'Respetaban los procesos.', 3);
+INSERT INTO Perfil (Id, Nombre_perfil, Fecha_vigencia, Descripcion, Encargado_id) 
+	VALUES (10, 'Perfil 10', '2023-03-15', 'Ofrecían soporte técnico.', 15);
+
+-- Ingreso de los 20 Usuarios
+INSERT INTO Usuario (Id, Nombre, Apellido, Estado, Contrasena, Cargo, Salario, Fecha_ingreso, Perfil_id) 
+	VALUES (1, 'Luis', 'Fernández', 'activo', 'abCD#123', 'Analista', 2456.78, '2023-01-25', 2);
+INSERT INTO Usuario (Id, Nombre, Apellido, Estado, Contrasena, Cargo, Salario, Fecha_ingreso, Perfil_id) 
+	VALUES (2, 'Ana', 'Gómez', 'inactivo', 'QweR#987', 'Líder', 3890.55, '2022-06-14', 1);
+INSERT INTO Usuario (Id, Nombre, Apellido, Estado, Contrasena, Cargo, Salario, Fecha_ingreso, Perfil_id) 
+	VALUES (3, 'Pedro', 'Lopez', 'activo', '123AbC$$', 'Gerente', 4321.99, '2023-03-08', 9);
+INSERT INTO Usuario (Id, Nombre, Apellido, Estado, Contrasena, Cargo, Salario, Fecha_ingreso, Perfil_id) 
+	VALUES (4, 'María', 'Martínez', 'activo', 'ZXc#9876', 'Asistente', 1789.25, '2022-12-05', 8);
+INSERT INTO Usuario (Id, Nombre, Apellido, Estado, Contrasena, Cargo, Salario, Fecha_ingreso, Perfil_id) 
+	VALUES (5, 'Carlos', 'Ruiz', 'inactivo', 'PoiU#456', 'Analista', 2001.66, '2022-09-30', 5);
+
+INSERT INTO Usuario (Id, Nombre, Apellido, Estado, Contrasena, Cargo, Salario, Fecha_ingreso, Perfil_id) 
+	VALUES (6, 'Elena', 'Morales', 'activo', 'AsDf#789', 'Supervisor', 3120.00, '2022-05-20', 2);
+INSERT INTO Usuario (Id, Nombre, Apellido, Estado, Contrasena, Cargo, Salario, Fecha_ingreso, Perfil_id) 
+	VALUES (7, 'Diego', 'Santos', 'activo', 'Pass#234', 'Técnico', 1987.40, '2023-07-01', 7);
+INSERT INTO Usuario (Id, Nombre, Apellido, Estado, Contrasena, Cargo, Salario, Fecha_ingreso, Perfil_id) 
+	VALUES (8, 'Lucía', 'Vargas', 'inactivo', 'Key#0921', 'Coordinador', 2780.33, '2021-11-18', 4);
+INSERT INTO Usuario (Id, Nombre, Apellido, Estado, Contrasena, Cargo, Salario, Fecha_ingreso, Perfil_id) 
+	VALUES (9, 'Andrés', 'Ramírez', 'activo', 'Hola#456', 'Asistente', 1850.90, '2022-04-12', 3);
+INSERT INTO Usuario (Id, Nombre, Apellido, Estado, Contrasena, Cargo, Salario, Fecha_ingreso, Perfil_id) 
+	VALUES (10, 'Laura', 'Pérez', 'activo', 'Clave#999', 'Jefe', 4500.00, '2021-12-29', 5);
+
+INSERT INTO Usuario (Id, Nombre, Apellido, Estado, Contrasena, Cargo, Salario, Fecha_ingreso, Perfil_id) 
+	VALUES (11, 'Sofía', 'Delgado', 'activo', 'Seg#1234', 'Técnico', 1995.75, '2022-07-15', 1);
+INSERT INTO Usuario (Id, Nombre, Apellido, Estado, Contrasena, Cargo, Salario, Fecha_ingreso, Perfil_id) 
+	VALUES (12, 'Jorge', 'Mendoza', 'activo', 'Zxc#4567', 'Supervisor', 3210.22, '2023-03-03', 6);
+INSERT INTO Usuario (Id, Nombre, Apellido, Estado, Contrasena, Cargo, Salario, Fecha_ingreso, Perfil_id) 
+	VALUES (13, 'Camila', 'Ríos', 'activo', '321#Abc', 'Coordinador', 2750.50, '2021-10-07', 3);
+INSERT INTO Usuario (Id, Nombre, Apellido, Estado, Contrasena, Cargo, Salario, Fecha_ingreso, Perfil_id) 
+	VALUES (14, 'Esteban', 'Navarro', 'inactivo', 'JKl#777', 'Asistente', 1900.00, '2022-09-19', 4);
+INSERT INTO Usuario (Id, Nombre, Apellido, Estado, Contrasena, Cargo, Salario, Fecha_ingreso, Perfil_id) 
+	VALUES (15, 'Gabriela', 'Silva', 'activo', 'MnB#258', 'Analista', 2330.89, '2023-01-11', 10);
+
+INSERT INTO Usuario (Id, Nombre, Apellido, Estado, Contrasena, Cargo, Salario, Fecha_ingreso, Perfil_id) 
+	VALUES (16, 'Tomás', 'Herrera', 'activo', 'Asd#001', 'Analista', 2100.00, '2022-10-14', 2);
+INSERT INTO Usuario (Id, Nombre, Apellido, Estado, Contrasena, Cargo, Salario, Fecha_ingreso, Perfil_id) 
+	VALUES (17, 'Valentina', 'Fuentes', 'inactivo', 'UiO#321', 'Líder', 3650.99, '2022-06-30', 1);
+INSERT INTO Usuario (Id, Nombre, Apellido, Estado, Contrasena, Cargo, Salario, Fecha_ingreso, Perfil_id) 
+	VALUES (18, 'Ricardo', 'Cruz', 'activo', 'Qaz#741', 'Técnico', 1920.80, '2021-11-25', 6);
+INSERT INTO Usuario (Id, Nombre, Apellido, Estado, Contrasena, Cargo, Salario, Fecha_ingreso, Perfil_id) 
+	VALUES (19, 'Paula', 'Salinas', 'activo', 'Lop#852', 'Gerente', 4700.00, '2023-05-17', 9);
+INSERT INTO Usuario (Id, Nombre, Apellido, Estado, Contrasena, Cargo, Salario, Fecha_ingreso, Perfil_id) 
+	VALUES (20, 'Martín', 'Ortega', 'activo', 'Bnm#963', 'Coordinador', 2800.00, '2021-08-09', 6);
+
+-- Registros de autenticación (Login)
+INSERT INTO Login (Usuario_id, Fecha_hora_login, Estado_login) VALUES
+(1, '2024-07-01 08:00:00', 'exitoso'),
+(2, '2024-07-01 08:10:00', 'exitoso'),
+(3, '2024-07-02 09:15:00', 'fallido'),
+(4, '2024-07-02 09:25:00', 'exitoso'),
+(5, '2024-07-03 10:00:00', 'exitoso'),
+(6, '2024-07-03 11:30:00', 'fallido'),
+(7, '2024-07-04 08:50:00', 'exitoso'),
+(8, '2024-07-05 08:55:00', 'exitoso'),
+(9, '2024-07-05 09:10:00', 'fallido'),
+(10, '2024-07-06 10:45:00', 'exitoso'),
+(11, '2024-07-06 11:00:00', 'exitoso'),
+(12, '2024-07-07 12:00:00', 'fallido'),
+(13, '2024-07-08 13:00:00', 'exitoso'),
+(14, '2024-07-08 13:15:00', 'fallido'),
+(15, '2024-07-09 14:00:00', 'exitoso'),
+(16, '2024-07-10 15:00:00', 'exitoso'),
+(17, '2024-07-11 15:30:00', 'exitoso'),
+(18, '2024-07-12 16:00:00', 'fallido'),
+(19, '2024-07-13 17:00:00', 'exitoso'),
+(20, '2024-07-14 18:00:00', 'fallido');
+
+INSERT INTO Login (Usuario_id, Fecha_hora_login, Estado_login) VALUES
+(1, '2024-07-15 08:00:00', 'exitoso'),
+(2, '2024-07-16 08:10:00', 'exitoso'),
+(3, '2024-07-17 09:15:00', 'fallido'),
+(4, '2024-07-18 09:25:00', 'exitoso'),
+(5, '2024-07-19 10:00:00', 'exitoso'),
+(6, '2024-07-20 11:30:00', 'fallido'),
+(7, '2024-07-21 08:50:00', 'exitoso'),
+(8, '2024-07-22 08:55:00', 'exitoso'),
+(9, '2024-07-22 09:10:00', 'fallido'),
+(10, '2024-07-23 10:45:00', 'exitoso'),
+(11, '2024-07-24 11:00:00', 'exitoso'),
+(12, '2024-07-25 12:00:00', 'fallido'),
+(13, '2024-07-26 13:00:00', 'exitoso'),
+(14, '2024-07-27 13:15:00', 'fallido'),
+(15, '2024-07-28 14:00:00', 'exitoso'),
+(16, '2024-07-28 15:00:00', 'exitoso'),
+(17, '2024-07-28 15:30:00', 'exitoso'),
+(18, '2024-07-29 16:00:00', 'fallido'),
+(19, '2024-07-29 17:00:00', 'exitoso'),
+(20, '2024-07-29 18:00:00', 'fallido');
+
+-- Registros de actividades de fidelización para 12 meses
+INSERT INTO ActividadFidelizacion (Usuario_id, Fecha_actividad, Tipo_actividad, Descripcion, Puntos) VALUES
+(1, '2024-06-05', 'Taller', 'Participación en taller de liderazgo', 150),
+(2, '2024-06-20', 'Evento', 'Asistencia a evento corporativo', 240),
+(3, '2024-07-10', 'Concurso', 'Ganador del concurso mensual', 500),
+(4, '2024-07-25', 'Capacitación', 'Curso de innovación empresarial', 550),
+(5, '2024-08-08', 'Evento', 'Participación en feria de talentos', 545),
+(6, '2024-08-22', 'Taller', 'Taller de comunicación efectiva', 355),
+(7, '2024-09-03', 'Capacitación', 'Entrenamiento en software interno', 470),
+(8, '2024-09-18', 'Evento', 'Actividad de integración de equipo', 930),
+(9, '2024-10-01', 'Concurso', 'Concurso de ideas de mejora', 590),
+(10, '2024-10-15', 'Taller', 'Taller de productividad personal', 735),
+(11, '2024-11-04', 'Capacitación', 'Curso avanzado de ventas', 580),
+(12, '2024-11-19', 'Evento', 'Cena empresarial de fin de año', 825),
+(13, '2024-12-05', 'Taller', 'Taller de resolución de conflictos', 965),
+(14, '2024-12-20', 'Concurso', 'Desafío de innovación digital', 695),
+(15, '2025-01-10', 'Capacitación', 'Entrenamiento técnico', 370),
+(16, '2025-01-25', 'Evento', 'Reto deportivo corporativo', 820),
+(17, '2025-02-09', 'Taller', 'Taller de habilidades blandas', 255),
+(18, '2025-02-23', 'Capacitación', 'Certificación en gestión de proyectos', 185),
+(19, '2025-03-11', 'Concurso', 'Campeonato de ideas creativas', 575),
+(20, '2025-03-26', 'Evento', 'Voluntariado empresarial', 45),
+(1, '2025-04-07', 'Capacitación', 'Capacitación en liderazgo digital', 860),
+(2, '2025-04-22', 'Taller', 'Taller de manejo del estrés', 750),
+(3, '2025-05-03', 'Evento', 'Jornada de bienestar corporativo', 435),
+(4, '2025-05-18', 'Concurso', 'Reto mensual de innovación', 690);
+
+-- Cálculo de Puntos de Fidelización Acumulados por Usuario (últimos 12 meses)
+SELECT 
+    u.Id AS Usuario_id,
+    CONCAT(u.Nombre, ' ', u.Apellido) AS Nombre_completo,
+    COUNT(a.Id) AS Total_actividades,
+    SUM(a.Puntos) AS Total_puntos_acumulados
+FROM Usuario u
+JOIN ActividadFidelizacion a ON u.Id = a.Usuario_id
+WHERE a.Fecha_actividad BETWEEN '2024-06-01' AND '2025-05-31'
+GROUP BY u.Id, Nombre_completo
+ORDER BY Total_puntos_acumulados DESC;
+
+-- Vistas SQL
+-- 1. Vista de Desempeño de Colaboradores
+CREATE OR REPLACE VIEW v_DesempenoColaboradores AS
+SELECT 
+    u.Id AS Usuario_id,
+    CONCAT(u.Nombre, ' ', u.Apellido) AS Nombre_completo,
+    u.Cargo,
+    u.Salario,
+    u.Fecha_ingreso,
+
+    -- Total de puntos y promedio
+    COALESCE(SUM(af.Puntos), 0) AS Ttl_puntos_fidelizacion_acumulados,
+    ROUND(COALESCE(AVG(af.Puntos), 0), 2) AS Promedio_puntos_por_actividad,
+
+    -- Estado de fidelización
+    CASE
+        WHEN SUM(af.Puntos) > 500 THEN 'Excelente'
+        WHEN SUM(af.Puntos) BETWEEN 200 AND 500 THEN 'Bueno'
+        ELSE 'Regular'
+    END AS Estado_fidelizacion,
+
+    -- Días desde último login exitoso
+    DATEDIFF(CURDATE(), (
+        SELECT MAX(l.Fecha_hora_login)
+        FROM Login l
+        WHERE l.Usuario_id = u.Id AND l.Estado_login = 'exitoso'
+    )) AS Dias_desde_ultimo_login
+
+FROM Usuario u
+LEFT JOIN ActividadFidelizacion af 
+    ON u.Id = af.Usuario_id
+    AND af.Fecha_actividad BETWEEN '2024-06-01' AND '2025-05-31'
+
+GROUP BY u.Id, u.Nombre, u.Apellido, u.Cargo, u.Salario, u.Fecha_ingreso;
+
+Select *
+From v_DesempenoColaboradores;
+
+-- 2. Vista de Actividades por Perfil
+CREATE OR REPLACE VIEW v_actividadesPorPerfil AS
+SELECT
+    p.Id AS Perfil_id,
+    p.Nombre_perfil,
+    p.Descripcion,
+    COUNT(DISTINCT u.Id) AS Cantidad_usuarios_con_este_perfil,
+    COUNT(af.Id) AS Total_actividades_participadas_por_perfil,
+    ROUND(SUM(af.Puntos) / COUNT(DISTINCT u.Id), 2) AS Promedio_puntos_por_usuario_en_este_perfil,
+    ROUND(100.0 * COUNT(af.Id) / (SELECT COUNT(*) FROM ActividadFidelizacion), 2) AS porcentaje_participacion_total
+FROM Perfil p
+JOIN Usuario u ON p.Id = u.Perfil_id
+LEFT JOIN ActividadFidelizacion af ON u.Id = af.Usuario_id
+GROUP BY p.Id;
+
+Select *
+From v_actividadesPorPerfil;
+
+-- 3. Vista de Historial de Login Detallado
+CREATE OR REPLACE VIEW v_historialLoginDetallado AS
+SELECT
+    u.Nombre,
+    u.Apellido,
+    u.Cargo,
+    l.Fecha_hora_login,
+    l.Estado_login,
+    TIMESTAMPDIFF(MINUTE,
+        (SELECT MAX(l2.Fecha_hora_login)
+         FROM Login l2
+         WHERE l2.Usuario_id = u.Id AND l2.Fecha_hora_login < l.Fecha_hora_login),
+        l.Fecha_hora_login
+    ) AS tiempo_desde_anterior_login
+FROM Login l
+JOIN Usuario u ON l.Usuario_id = u.Id
+ORDER BY u.Id, l.Fecha_hora_login;
+
+Select *
+From v_historialLoginDetallado;
